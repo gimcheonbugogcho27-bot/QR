@@ -1,0 +1,6 @@
+{
+  "appId": "com.qrmaker.app",
+  "appName": "QR메이커",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

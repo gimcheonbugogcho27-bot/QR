@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; img-src 'self' data: blob:;">
+<title>QR 메이커</title>
+<style>
+  :root{
+    --bg1:#0f1530; --bg2:#2a1b4a; --glass:rgba(255,255,255,.08); --border:rgba(255,255,255,.18);
+    --text:#f4f6ff; --sub:#b8bfdc; --accent:#6c8cff; --accent2:#a46cff; --input:rgba(255,255,255,.1);
+  }
+  body.light{
+    --bg1:#e9efff; --bg2:#f7e9ff; --glass:rgba(255,255,255,.6); --border:rgba(255,255,255,.9);
+    --text:#1d2340; --sub:#5b6385; --input:rgba(255,255,255,.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    min-height:100vh;font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    color:var(--text);background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    padding:max(20px,env(safe-area-inset-top)) 16px 40px;transition:background .3s,color .3s;
+  }
+  .wrap{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+  header{display:flex;align-items:center;justify-content:space-between}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.5px}
+  h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .glass{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:20px;
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 10px 30px rgba(0,0,0,.15)}
+  label{display:block;font-size:14px;font-weight:700;color:var(--sub);margin:0 0 6px 2px}
+  input{width:100%;font-size:17px;padding:14px;border-radius:14px;border:1px solid var(--border);
+    background:var(--input);color:var(--text);outline:none;margin-bottom:14px;font-family:inherit}
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,140,255,.3)}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:14px;font-weight:700}
+  .primary{width:100%;font-size:18px;padding:15px;color:#fff;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    box-shadow:0 6px 18px rgba(108,140,255,.4)}
+  .primary:active{transform:scale(.98)}
+  .icon-btn{background:var(--glass);border:1px solid var(--border);color:var(--text);padding:9px 13px;font-size:15px}
+  .err{color:#ff7a8a;font-size:14px;min-height:18px;margin-top:8px;text-align:center}
+  #result{display:none;text-align:center}
+  #result.show{display:block}
+  #qrCanvas{width:100%;max-width:340px;height:auto;border-radius:14px;background:#fff;display:block;margin:0 auto}
+  .url-text{font-size:13px;color:var(--sub);word-break:break-all;margin:10px 0 14px}
+  .row{display:flex;gap:10px}
+  .row button{flex:1;padding:13px;font-size:16px;color:var(--text);background:var(--input);border:1px solid var(--border)}
+  .row button.save{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:none}
+  .hist-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .hist-head h2{font-size:16px}
+  .hist-head button{background:none;color:var(--sub);font-size:13px;padding:4px}
+  #history{list-style:none;display:flex;flex-direction:column;gap:8px}
+  #history li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--input);cursor:pointer}
+  #history li .t{flex:1;min-width:0}
+  #history li .t b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #history li .t small{display:block;font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #history li .del{background:none;color:var(--sub);font-size:18px;padding:2px 6px}
+  .empty{font-size:13px;color:var(--sub);text-align:center;padding:6px}
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);opacity:0;
+    background:rgba(20,24,45,.92);color:#fff;padding:12px 20px;border-radius:30px;font-size:15px;transition:.25s;pointer-events:none;z-index:9}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📱 <span>QR 메이커</span></h1>
+    <button class="icon-btn" id="themeBtn" title="테마 전환">☀️</button>
+  </header>
+
+  <section class="glass">
+    <label for="title">제목</label>
+    <input id="title" type="text" placeholder="예) 4학년 4반 학급 게시판" maxlength="40" autocomplete="off">
+    <label for="url">URL (주소)</label>
+    <input id="url" type="url" inputmode="url" placeholder="https://..." autocomplete="off">
+    <button class="primary" id="makeBtn">QR 코드 만들기</button>
+    <div class="err" id="err"></div>
+  </section>
+
+  <section class="glass" id="result">
+    <canvas id="qrCanvas"></canvas>
+    <div class="url-text" id="urlText"></div>
+    <div class="row">
+      <button id="copyBtn">🔗 주소 복사</button>
+      <button class="save" id="saveBtn">💾 이미지 저장</button>
+    </div>
+  </section>
+
+  <section class="glass">
+    <div class="hist-head"><h2>🕘 최근 만든 QR</h2><button id="clearBtn">전체 삭제</button></div>
+    <ul id="history"></ul>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="qrcode-lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

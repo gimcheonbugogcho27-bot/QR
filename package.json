@@ -1,0 +1,37 @@
+{
+  "name": "qr-maker",
+  "productName": "QR메이커",
+  "version": "1.0.0",
+  "description": "URL과 제목을 넣고 클릭하면 QR 코드를 만들어 주는 앱",
+  "main": "electron/main.js",
+  "author": "QR Maker",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/assets": "^3.0.5"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.2",
+    "@capacitor/share": "^6.0.3"
+  },
+  "build": {
+    "appId": "com.qrmaker.app",
+    "productName": "QR메이커",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["electron/**", "www/**", "build/icon.png"],
+    "win": {
+      "target": [{ "target": "portable", "arch": ["x64"] }, { "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.png"
+    },
+    "portable": { "artifactName": "QRMaker_portable_${version}.exe" },
+    "nsis": { "artifactName": "QRMaker_Setup_${version}.exe", "oneClick": false, "allowToChangeInstallationDirectory": true }
+  }
+}
