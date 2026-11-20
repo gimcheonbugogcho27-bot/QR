@@ -1,11 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c8cff"/><stop offset="1" stop-color="#a46cff"/></linearGradient></defs>
-<rect width="1024" height="1024" rx="220" fill="url(#g)"/>
-<rect x="212" y="212" width="600" height="600" rx="60" fill="#fff"/>
-<g fill="#1d2340">
-<rect x="262" y="262" width="190" height="190" rx="24"/><rect x="572" y="262" width="190" height="190" rx="24"/><rect x="262" y="572" width="190" height="190" rx="24"/>
-</g>
-<g fill="#fff"><rect x="302" y="302" width="110" height="110" rx="12"/><rect x="612" y="302" width="110" height="110" rx="12"/><rect x="302" y="612" width="110" height="110" rx="12"/></g>
-<g fill="#1d2340"><rect x="332" y="332" width="50" height="50" rx="6"/><rect x="642" y="332" width="50" height="50" rx="6"/><rect x="332" y="642" width="50" height="50" rx="6"/>
-<rect x="572" y="572" width="70" height="70" rx="10"/><rect x="692" y="572" width="70" height="70" rx="10"/><rect x="632" y="632" width="70" height="70" rx="10"/><rect x="572" y="692" width="70" height="70" rx="10"/><rect x="692" y="692" width="70" height="70" rx="10"/></g>
-</svg>
+<defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a3aff"/><stop offset=".55" stop-color="#7b2ff7"/><stop offset="1" stop-color="#c2189b"/></linearGradient>
+<radialGradient id="h" cx=".28" cy=".2" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<linearGradient id="m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d5afe"/><stop offset="1" stop-color="#8e2de2"/></linearGradient>
+<linearGradient id="l" x1="0" x2="1"><stop offset="0" stop-color="#00f0ff" stop-opacity="0"/><stop offset=".5" stop-color="#21f3ff"/><stop offset="1" stop-color="#00f0ff" stop-opacity="0"/></linearGradient>
+<filter id="g" x="-10%" y="-400%" width="120%" height="900%"><feGaussianBlur stdDeviation="9"/></filter>
+<filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#14063d" flood-opacity=".5"/></filter>
+</defs>
+<rect width="1024" height="1024" rx="230" fill="url(#b)"/><rect width="1024" height="1024" rx="230" fill="url(#h)"/><g transform="translate(512 512) scale(1.12) translate(-512 -512)">
+<rect x="257" y="257" width="510" height="510" rx="96" fill="#fff" filter="url(#sh)"/>
+<rect x="312" y="312" width="124" height="124" rx="34" fill="none" stroke="url(#m)" stroke-width="22"/><rect x="349" y="349" width="50" height="50" rx="16" fill="url(#m)"/><rect x="588" y="312" width="124" height="124" rx="34" fill="none" stroke="url(#m)" stroke-width="22"/><rect x="625" y="349" width="50" height="50" rx="16" fill="url(#m)"/><rect x="312" y="588" width="124" height="124" rx="34" fill="none" stroke="url(#m)" stroke-width="22"/><rect x="349" y="625" width="50" height="50" rx="16" fill="url(#m)"/><circle cx="512.0" cy="328.0" r="16.56" fill="url(#m)"/><circle cx="512.0" cy="374.0" r="16.56" fill="url(#m)"/><circle cx="558.0" cy="420.0" r="16.56" fill="url(#m)"/><circle cx="466.0" cy="420.0" r="16.56" fill="url(#m)"/><circle cx="512.0" cy="466.0" r="16.56" fill="url(#m)"/><circle cx="328.0" cy="512.0" r="16.56" fill="url(#m)"/><circle cx="374.0" cy="512.0" r="16.56" fill="url(#m)"/><circle cx="420.0" cy="558.0" r="16.56" fill="url(#m)"/><circle cx="466.0" cy="512.0" r="16.56" fill="url(#m)"/><circle cx="558.0" cy="512.0" r="16.56" fill="url(#m)"/><circle cx="604.0" cy="512.0" r="16.56" fill="url(#m)"/><circle cx="696.0" cy="512.0" r="16.56" fill="url(#m)"/><circle cx="650.0" cy="558.0" r="16.56" fill="url(#m)"/><circle cx="512.0" cy="558.0" r="16.56" fill="url(#m)"/><circle cx="466.0" cy="604.0" r="16.56" fill="url(#m)"/><circle cx="558.0" cy="604.0" r="16.56" fill="url(#m)"/><circle cx="604.0" cy="604.0" r="16.56" fill="url(#m)"/><circle cx="696.0" cy="604.0" r="16.56" fill="url(#m)"/><circle cx="512.0" cy="650.0" r="16.56" fill="url(#m)"/><circle cx="604.0" cy="650.0" r="16.56" fill="url(#m)"/><circle cx="650.0" cy="650.0" r="16.56" fill="url(#m)"/><circle cx="466.0" cy="696.0" r="16.56" fill="url(#m)"/><circle cx="558.0" cy="696.0" r="16.56" fill="url(#m)"/><circle cx="696.0" cy="696.0" r="16.56" fill="url(#m)"/><circle cx="650.0" cy="466.0" r="16.56" fill="url(#m)"/><circle cx="374.0" cy="466.0" r="16.56" fill="url(#m)"/>
+<rect x="235" y="500" width="554" height="22" rx="11" fill="url(#l)" filter="url(#g)"/>
+<rect x="235" y="506" width="554" height="10" rx="5" fill="url(#l)"/>
+</g></svg>
