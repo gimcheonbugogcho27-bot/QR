@@ -53,6 +53,13 @@
   #history li .t small{display:block;font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #history li .del{background:none;color:var(--sub);font-size:18px;padding:2px 6px}
   .empty{font-size:13px;color:var(--sub);text-align:center;padding:6px}
+  /* PC 앱: 블러 효과가 입력을 느리게 만들 수 있어 끔 */
+  body.pc .glass{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(30,36,70,.88)}
+  body.pc.light .glass{background:rgba(255,255,255,.92)}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:10;padding:20px}
+  .modal.show{display:flex}
+  .modal .box{background:var(--bg1);border:1px solid var(--border);border-radius:18px;padding:22px;width:100%;max-width:320px;text-align:center}
+  .modal p{font-size:17px;font-weight:700;margin-bottom:16px}
   .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);opacity:0;
     background:rgba(20,24,45,.92);color:#fff;padding:12px 20px;border-radius:30px;font-size:15px;transition:.25s;pointer-events:none;z-index:9}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -67,9 +74,9 @@
 
   <section class="glass">
     <label for="title">제목</label>
-    <input id="title" type="text" placeholder="예) 4학년 4반 학급 게시판" maxlength="40" autocomplete="off">
+    <input id="title" type="text" placeholder="예) 4학년 4반 학급 게시판" autocomplete="off" spellcheck="false">
     <label for="url">URL (주소)</label>
-    <input id="url" type="url" inputmode="url" placeholder="https://..." autocomplete="off">
+    <input id="url" type="url" inputmode="url" placeholder="https://..." autocomplete="off" spellcheck="false" autocapitalize="off">
     <button class="primary" id="makeBtn">QR 코드 만들기</button>
     <div class="err" id="err"></div>
   </section>
@@ -89,6 +96,8 @@
   </section>
 </div>
 <div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="box"><p>기록을 모두 지울까요?</p>
+  <div class="row"><button id="modalNo">취소</button><button class="save" id="modalYes">삭제</button></div></div></div>
 
 <script src="qrcode-lib.js"></script>
 <script src="app.js"></script>

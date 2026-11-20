@@ -1,7 +1,7 @@
 {
   "name": "qr-maker",
   "productName": "QR메이커",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "URL과 제목을 넣고 클릭하면 QR 코드를 만들어 주는 앱",
   "main": "electron/main.js",
   "author": "QR Maker",

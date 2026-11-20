@@ -89,9 +89,16 @@
     if (!silent) { addHistory(title, url); result.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   }
   $('makeBtn').onclick = function () { make(titleIn.value.trim(), urlIn.value); };
-  [titleIn, urlIn].forEach(function (el) {
-    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') $('makeBtn').click(); });
+  // 한글 입력(IME) 조합 중 Enter는 무시 — 글자가 잘리거나 두 번 들어가는 문제 방지
+  function isComposing(e) { return e.isComposing || e.keyCode === 229; }
+  titleIn.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !isComposing(e)) { e.preventDefault(); urlIn.focus(); }
   });
+  urlIn.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !isComposing(e)) { e.preventDefault(); $('makeBtn').click(); }
+  });
+  if (/Electron/i.test(navigator.userAgent)) document.body.classList.add('pc');
+  setTimeout(function () { titleIn.focus(); }, 100);
 
   // ---------- 파일 이름 ----------
   function fileName() {
@@ -167,7 +174,10 @@
       li.appendChild(t); li.appendChild(del); ul.appendChild(li);
     });
   }
-  $('clearBtn').onclick = function () { if (confirm('기록을 모두 지울까요?')) setHist([]); };
+  // PC 앱에서 기본 confirm 창을 쓰면 이후 입력칸에 글자가 안 써지는 문제가 있어 화면 안 확인창 사용
+  $('clearBtn').onclick = function () { $('modal').classList.add('show'); };
+  $('modalNo').onclick = function () { $('modal').classList.remove('show'); };
+  $('modalYes').onclick = function () { $('modal').classList.remove('show'); setHist([]); };
   renderHist();
 
   // ---------- 토스트 ----------

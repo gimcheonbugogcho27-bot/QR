@@ -10,6 +10,7 @@ function createWindow() {
     webPreferences: { contextIsolation: true, nodeIntegration: false }
   });
   Menu.setApplicationMenu(null);
+  win.webContents.on('did-finish-load', () => { win.focus(); win.webContents.focus(); });
   win.loadFile(path.join(__dirname, '..', 'www', 'index.html'));
   // 외부 링크는 기본 브라우저로
   win.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' }; });
